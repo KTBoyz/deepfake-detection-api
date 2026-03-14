@@ -31,7 +31,7 @@ async def detect(file: UploadFile = File(...)):
         return {"error": "Invalid Image Format"}
 
     # 2. Pre-processing: Convert to Gray and Resize
-    # Resizing ensures the '300' threshold works for every image size
+    # Resizing ensures the '85' threshold works for every image size
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     gray = cv2.resize(gray, (500, 500))
 
@@ -40,8 +40,8 @@ async def detect(file: UploadFile = File(...)):
     score = cv2.Laplacian(gray, cv2.CV_64F).var()
 
     # 4. Strict Logic (Calibrated for your 396.12 score)
-    # If the score is above 300, we classify as AI.
-    if score > 300:
+    # If the score is above 85, we classify as AI.
+    if score > 85:
         prediction = "Likely AI / Synthetic"
         label_code = "AI_DETECTED"
         confidence = 0.98
